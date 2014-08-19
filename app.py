@@ -35,7 +35,9 @@ def main():
 
     print("===============================================")
     print("next round:")
-    pprint(knowledge[playing_song])   
+    next_probs = knowledge[playing_song]
+    pprint(next_probs)
+    pprint("probability of going back to itself: " + str(dict(next_probs)[playing_song]))
     pprint("selected song: " + playing_song) 
     pprint("selected song probability: " + str(next[1]))
 
