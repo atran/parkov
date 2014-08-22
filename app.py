@@ -4,7 +4,7 @@ from pprint import pprint
 import numpy as np
 from numpy.random import random_sample
 from numpy.random.mtrand import dirichlet
-from numpy.random import choice
+from random import choice
 import mad
 import pyaudio
 import time
