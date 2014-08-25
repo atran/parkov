@@ -1,5 +1,13 @@
+# Parkov
 
-linux -> ffado -> motu ultralite 
+Installation using Raspberry Pis to create Markov Chains; making algorithms physical.
 
-TODO: silence as option that the length of time is determined by probability coming in
-TODO: play at the right rate
+## Setup
+
+- Install python
+- Install pip `apt-get install python-pip`
+- Install pexpect `pip install pexpect`
+
+## Use
+
+Partition a FAT32 portion on the SD Card. Mount it on `\mnt\storage`. Place files to be played there.
