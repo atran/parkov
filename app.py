@@ -13,7 +13,7 @@ silent_knowledge = {}
 player = None
 
 def main():
-  sample_names = [mp3_file for mp3_file in glob("assets/*.*")]
+  sample_names = [mp3_file for mp3_file in glob("/mnt/storage")]
   playing_song = choice(sample_names)
 
   selector = ["silent", "silent", "sound"]
