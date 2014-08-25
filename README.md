@@ -10,4 +10,4 @@ Installation using Raspberry Pis to create Markov Chains; making algorithms phys
 
 ## Use
 
-Partition a FAT32 portion on the SD Card. Mount it on `\mnt\storage`. Place files to be played there.
+Partition a FAT32 portion on the SD Card. Mount it on `/mnt/storage`. Place files to be played there.
