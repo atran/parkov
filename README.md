@@ -4,7 +4,6 @@ Installation using Raspberry Pis to create Markov Chains; making algorithms phys
 
 ## Setup
 
-- Install python
 - Install pip `apt-get install python-pip`
 - Install pexpect `pip install pexpect`
 
