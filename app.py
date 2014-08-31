@@ -7,13 +7,19 @@ from numpy.random.mtrand import dirichlet
 from random import choice
 from pyomxplayer import OMXPlayer
 import time
+import OSC
 
 knowledge = {}
 silent_knowledge = {}
 player = None
+pi_id = "101"
 
 def main():
-  sample_names = [mp3_file for mp3_file in glob("/mnt/storage")]
+  global client
+  client = OSC.OSCClient()
+  client.connect(("192.168.1.100", 8080)) # first argument is the IP of the host, second argument is the port to use
+
+  sample_names = [mp3_file for mp3_file in glob("/mnt/storage/*.*")]
   playing_song = choice(sample_names)
 
   selector = ["silent", "silent", "sound"]
@@ -23,6 +29,8 @@ def main():
   silent_knowledge = generateMarkovChain(selector)
 
   player = OMXPlayer(playing_song, start_playback=True)
+
+  sendMessage(str(1), playing_song)
 
   while True:
     while player.finished == False:
@@ -38,6 +46,7 @@ def main():
         next_prob = silent_picker[1]
         seconds_of_silence = float(next_prob*10)
         print "playing silence for " + str(seconds_of_silence) + " seconds"
+        sendMessage(str(next_prob), "silence")
         time.sleep(seconds_of_silence)
       else:
         picker = pick_next(playing_song, knowledge)
@@ -46,6 +55,7 @@ def main():
         print("playing sound")
         print("selected song: " + playing_song) 
         print("selected song probability: " + str(next_prob))
+        sendMessage(str(next_prob), playing_song)
         player = OMXPlayer(next_song, start_playback=True)    
         playing_song = next_song
 
@@ -68,6 +78,10 @@ def pick_next(sample, markov):
   bins = np.add.accumulate(probabilities)
   song_index = np.digitize(random_sample(size), bins)
   return (values[song_index], probabilities[song_index])
+
+def sendMessage(prob, song):
+  data = [song, prob, pi_id]
+  client.send(OSC.OSCMessage("/probabilities", data)) 
 
 if __name__ == "__main__":
   main()
