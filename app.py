@@ -8,11 +8,17 @@ from random import choice
 from pyomxplayer import OMXPlayer
 import time
 import OSC
+import commands
 
 knowledge = {}
 silent_knowledge = {}
 player = None
-pi_id = "101"
+
+# Get the local IP
+intf = 'eth0'
+intf_ip = commands.getoutput("ip address show dev " + intf).split()
+intf_ip = intf_ip[intf_ip.index('inet') + 1].split('/')[0]
+pi_id = intf_ip
 
 def main():
   global client
@@ -80,6 +86,7 @@ def pick_next(sample, markov):
   return (values[song_index], probabilities[song_index])
 
 def sendMessage(prob, song):
+  print pi_id
   data = [song, prob, pi_id]
   client.send(OSC.OSCMessage("/probabilities", data)) 
 
